@@ -1,98 +1,41 @@
-# Projet Flask d'Encodage d'Adresse E-mail
+# Application Web de Gestion de smartphones
 
-Ce projet consiste en une application web Flask simple qui permet aux utilisateurs d'encoder une adresse e-mail via un formulaire HTML. L'adresse e-mail soumise est enregistrée dans un fichier JSON, et l'utilisateur voit une page de résultat affichant l'adresse e-mail qu'il a soumise.
+Ce projet est une application web simple pour la gestion de smartphones. L'objectif est de permettre aux utilisateurs d'ajouter des informations sur leurs smartphones à une base de données CSV à l'aide d'un formulaire web.
 
-## Structure du Projet
+## Technologies utilisées
 
-Le projet est organisé autour de deux fichiers principaux et un dossier statique pour les fichiers CSS.
+- Python
+- Flask (un framework web Python)
+- HTML
+- CSV (pour le stockage des données)
 
-### Fichiers Python
+## Fonctionnement de l'application
 
-1. **app.py**: Ce fichier contient le code Flask qui définit les routes de l'application. Les routes principales sont `/` pour la page d'accueil et `/submit` pour le traitement du formulaire lorsqu'il est soumis. L'adresse e-mail est extraite du formulaire et enregistrée dans un fichier JSON appelé `data.json`.
+L'application comporte deux pages principales :
 
-```python
-import json
-from flask import Flask, render_template, request
+1. **Page d'accueil (`index.html`)** :
+    - Cette page contient un formulaire où l'utilisateur peut saisir les informations sur son véhicule (numéro, marque, modèle, année).
+  
+2. **Page de résultat (`result.html`)** :
+    - Après avoir soumis le formulaire, cette page affiche un message de confirmation.
 
-app = Flask(__name__)
+## Structure du Code
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+- **`app.py`** : Ce fichier contient le code principal de l'application.
+    - Il définit deux routes :
+        - `/` : pour la page d'accueil.
+        - `/submit` : pour la soumission du formulaire.
+    - Lorsqu'un utilisateur soumet le formulaire, les données sont récupérées et enregistrées dans un fichier CSV.
+  
+- **`index.html`** : Le modèle HTML de la page d'accueil contenant le formulaire.
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    email = request.form['email']
-    data = {'email': email}
+- **`result.html`** : Le modèle HTML de la page de résultat affichant un message de confirmation.
 
-    with open('data.json', 'w') as outfile:
-        json.dump(data, outfile)
+## Comment exécuter l'application
 
-    return render_template('result.html', email=email)
+1. Assurez-vous d'avoir Python installé sur votre système.
+2. Installez Flask en exécutant `pip install flask` dans votre terminal.
+3. Exécutez le fichier `app.py` en utilisant la commande `python app.py`.
+4. Accédez à l'application dans votre navigateur en entrant l'URL `http://localhost:5000`.
 
-if __name__ == '__main__':
-    app.run(debug=True)
-```
-
-### Fichiers HTML
-
-2. **templates/base.html**: Fichier de base pour les pages HTML. Il contient la structure générale du document HTML, y compris les balises `<head>` et `<body>`. Il est étendu par d'autres templates.
-
-```html
-<!doctype html>
-<html lang="fr">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- CSS -->
-        <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
-
-        <title>{% block title %} {% endblock %}</title>
-    </head>
-    <body>
-        {% block content %} {% endblock %}
-    </body>
-</html>
-```
-
-3. **templates/index.html**: Template spécifique pour la page d'accueil. Il étend le fichier `base.html` et définit le contenu spécifique de la page d'accueil.
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-    <h1>{% block title %} Encoder une adresse e-mail {% endblock %}</h1>
-    <form method="POST" action="{{ url_for('submit') }}">
-		<label for="email">Adresse e-mail :</label>
-		<input type="email" id="email" name="email" required>
-		<button type="submit">Encoder</button>
-	</form>
-{% endblock %}
-```
-
-4. **templates/result.html**: Template spécifique pour la page de résultat. Il étend également `base.html` et affiche l'adresse e-mail soumise.
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-    <h1>{% block title %} Résultat de l'Encodage {% endblock %}</h1>
-    <p>L'adresse e-mail <strong>{{ email }}</strong> a été encodée avec succès.</p>
-{% endblock %}
-```
-
-### Dossier Statique
-
-5. **static/css/style.css**: Fichier CSS pour définir le style de l'application web.
-
-## Utilisation
-
-1. Assurez-vous d'avoir Flask installé (`pip install Flask`).
-2. Exécutez le fichier `app.py`.
-3. Accédez à l'application via votre navigateur à l'adresse [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
-4. Remplissez le formulaire avec une adresse e-mail et appuyez sur le bouton "Encoder".
-5. Vous serez redirigé vers une page de résultat affichant l'adresse e-mail encodée.
-
-Ce projet peut être utilisé comme base pour des applications plus complexes impliquant la collecte de données via des formulaires web.
+---
