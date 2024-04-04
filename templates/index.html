@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1 class="text-2xl font-bold mb-4">Encoder données : Smartphone</h1>
+	<form method="POST" action="{{ url_for('submit') }}" class="space-y-4">
+		<label for="num" class="block">Numéro de téléphone :</label>
+		<input type="text" id="num" name="num" required class="w-full p-2 border rounded">
+		<label for="brand" class="block">Marque du gsm :</label>
+		<input type="text" id="brand" name="brand" required class="w-full p-2 border rounded">
+		<label for="model" class="block">Modèle du gsm :</label>
+		<input type="text" id="model" name="model" required class="w-full p-2 border rounded">
+		<label for="year" class="block">Année de fabrication du gsm :</label>
+		<input type="text" id="year" name="year" required class="w-full p-2 border rounded">
+		<button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Encoder</button>
+	</form>
+{% endblock %}
